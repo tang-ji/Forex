@@ -1,13 +1,9 @@
 # code: UTF-8
-import re
-import string
-import numpy as np
-import datetime
-import time
-import matplotlib.pyplot as plt
-datapath = "C:/Documents/ForexData/"
 
-#This function will read the file and translate it to data
+from FkNN import *
+
+# This function will read the file and translate it into data
+# *** the lists of Date, Time, Price ***
 def file2data(filename):
     Date = []
     Time = []
@@ -24,12 +20,17 @@ def file2data(filename):
     return Date, Time, Price
 
 
+# To transform the time str into string
+# *** a string ***
 def str2UTC(timestr):
     return str(int(time.mktime(time.strptime(timestr, "%Y%m%d%H%M%S"))))
 
 
-def writeUTC(Date, Time ,Price , filename):
-    returnfile = open(datapath + "UTC"+filename, "w")
+# To creat a series of UTC data in the harddisk
+# *** No return ***
+def writeUTC(Date, Time, Price, filename):
+    returnfile = open(filename, "w")
     for index in range(len(Date)):
-        returnfile.write(str2UTC((Date[index])+str(Time[index])) + "," + str(returnUTC[index]) + "," + str(Price[index]) + "\n")
+        Timestr = str(Date[index]) + str(Time[index])
+        returnfile.write(Timestr + "," + str2UTC(Timestr) + "," + str(Price[index]) + "\n")
     returnfile.close()
