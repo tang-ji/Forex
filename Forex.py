@@ -1,7 +1,7 @@
 #code: UTF-8
 __author__ = 'Jojo'
 from Hurst import *
-from MVA import *
+from Indicator import *
 import changetime
 
 
@@ -18,6 +18,6 @@ endtime = "20070720"
 #
 # plotprice_hurst("UTC" + type[-6:], "20080730", "20080803", 50)
 
-plotBOLL("UTCXAUUSD", "20080304", "20080309", "500")
+plotBOLL("UTCXAUUSD", "20080304", "20080609", "2000")
 
 

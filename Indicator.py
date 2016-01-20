@@ -52,7 +52,7 @@ if version == -1:
         number = len(MVAPrice)
 
         # **********************************************************
-        fig = plt.figure(figsize=(8, 6), dpi=84, facecolor="white")
+        fig = plt.figure(figsize=(16, 12), dpi=84, facecolor="white")
         axes = plt.subplot(111)
         axes.cla()  # Clear all the information in the coordinate
         # Assign the font of the picture
@@ -117,12 +117,14 @@ if version == -1:
         plotMVAdata(Time, UTC, Price, MVAPrice, period, type[-6:])
 
 
+    # Plot the BOLL line
+    # *** No return ***
     def plotBOLLdata(Time, UTC, Price, MVAPrice, BOLLline, period, name):
         fp = name + "_" + str(Time[0][0:8]) + "_" + str(Time[-1][0:8])
         number = len(MVAPrice)
 
         # **********************************************************
-        fig = plt.figure(figsize=(8, 6), dpi=84, facecolor="white")
+        fig = plt.figure(figsize=(16, 12), dpi=84, facecolor="white")
         axes = plt.subplot(111)
         axes.cla()  # Clear all the information in the coordinate
         # Assign the font of the picture
@@ -179,7 +181,8 @@ if version == -1:
         plt.show()
 
 
-
+    # To plot the BOLL chart in the giving time for the giving type
+    # *** No return ***
     def plotBOLL(type, startime, endtime, Period):
         startime = int(time.mktime(time.strptime(startime, "%Y%m%d"))) - max([int(i) for i in Period.split(',')])
         startime = time.strftime("%Y%m%d", time.localtime(startime))

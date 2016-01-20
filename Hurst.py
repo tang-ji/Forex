@@ -62,7 +62,7 @@ if version == -1:
         fp = type[-6:] + "_" + str(Time[0][0:8]) + "_" + str(Time[-1][0:8])
 
         #**********************************************************
-        fig = plt.figure(figsize=(8, 6), dpi=84, facecolor="white")
+        fig = plt.figure(figsize=(16, 12), dpi=84, facecolor="white")
         axes = plt.subplot(211)
         axes.cla() # Clear all the information in the coordinate
         # Assign the font of the picture
