@@ -16,9 +16,9 @@ def MVA(UTC, Price, Period):
         MVAi = []
         for j in range(len(UTC)):
             if j + 1 < period[i]:
-                MVAi.append(np.mean(Price[:j + 1]))
+                MVAi.append(round(np.mean(Price[:j + 1]), 1))
             else:
-                MVAi.append(np.mean(Price[j + 1 - period[i]:j + 1]))
+                MVAi.append(round(np.mean(Price[j + 1 - period[i]:j + 1]), 1))
         MVAPrice.append(MVAi)
     return MVAPrice, period
 
@@ -39,8 +39,8 @@ def BOLL(UTC, Price, Period):
             else:
                 MVAi = np.mean(Price[j + 1 - period[i]:j + 1])
                 VARi = np.var(Price[j + 1 - period[i]:j + 1])
-            line.append(MVAi + 2 * math.sqrt(VARi))
-            line.append(MVAi - 2 * math.sqrt(VARi))
+            line.append(round(MVAi + 2 * math.sqrt(VARi), 1))
+            line.append(round(MVAi - 2 * math.sqrt(VARi), 1))
             BOLLclass.append(line)
         BOLLline.append(BOLLclass)
     return MVAPrice, BOLLline, period
@@ -63,6 +63,8 @@ def saveBOLL(type, startime, endtime, Period):
     MVAPrice = np.array(MVAPrice)[:, max(period):]
     BOLLline = np.array(BOLLline)[:, max(period):]
     filename = type[-6:] + startime + "_" + endtime + "_BOLL" + Period + ".txt"
+    if os.path.exists(datapath) == False:
+        os.mkdir(datapath)
     returnfile = open(datapath + filename, "w")
     for index in range(len(UTC)):
         returnfile.write(str(Time[index]) + "," + str(UTC[index]) + "," + str(Price[index]) + ","\

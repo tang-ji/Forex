@@ -13,7 +13,7 @@ version = sys.version.find("Red Hat")
 if version == -1:
     import matplotlib.pyplot as plt
 
-datapath = os.getcwd() + "Data\\"
+datapath = os.getcwd() + "Data/"
 
 # This function will read the file and translate it to data
 # *** the lists of Date, Time, Price ***
