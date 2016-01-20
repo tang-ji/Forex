@@ -1,10 +1,14 @@
-# code: UTF-8
+# -*- coding:utf-8 -*-
 __author__ = 'Jojo'
+
+import sys
+reload(sys)
+sys.setdefaultencoding('utf-8')
 from FkNN import *
 from changetime import *
 
 
-datapath = os.getcwd() + "BuildData\\"
+datapath = os.getcwd() + "BuildData/"
 
 # Calculate the moving average line of each period
 # *** a matrix of MVA and a list of Period ***
@@ -69,7 +73,7 @@ def saveBOLL(type, startime, endtime, Period):
     for index in range(len(UTC)):
         returnfile.write(str(Time[index]) + "," + str(UTC[index]) + "," + str(Price[index]) + ","\
                          + str(MVAPrice[0][index]) + "," + str(BOLLline[0][index, 0]) + "," +\
-                         str(BOLLline[0][index, 1]) + "\n")
+                         str(BOLLline[0][index, 1]) + '\n')
     returnfile.close()
 
 

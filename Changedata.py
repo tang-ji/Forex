@@ -1,4 +1,4 @@
-# code: UTF-8
+# -*- coding:utf-8 -*-
 
 from FkNN import *
 
