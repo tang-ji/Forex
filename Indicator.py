@@ -33,6 +33,7 @@ def BOLL(UTC, Price, Period):
     MVAPrice, period = MVA(UTC, Price, Period)
     number = len(period)
     BOLLline = []
+    MVAPrice = []
     for i in range(number):
         BOLLclass = []
         for j in range(len(UTC)):
@@ -40,12 +41,15 @@ def BOLL(UTC, Price, Period):
             if j + 1 < period[i]:
                 MVAi = np.mean(Price[:j + 1])
                 VARi = np.var(Price[:j + 1])
+                MVAj.append(round(MVAi, 1))
             else:
                 MVAi = np.mean(Price[j + 1 - period[i]:j + 1])
                 VARi = np.var(Price[j + 1 - period[i]:j + 1])
+                MVAj.append(round(MVAi, 1))
             line.append(round(MVAi + 2 * math.sqrt(VARi), 1))
             line.append(round(MVAi - 2 * math.sqrt(VARi), 1))
             BOLLclass.append(line)
+        MVAPrice.append(MVAj)
         BOLLline.append(BOLLclass)
     return MVAPrice, BOLLline, period
 
