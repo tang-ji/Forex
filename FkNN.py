@@ -316,9 +316,9 @@ if version == -1:
         ax = plt.gca()
         interval = int(len(Price) / 5)
         ax.set_xticks(np.linspace(UTC[0], UTC[-1], 5))
-        ax.set_xticklabels( (Time[0][0:8], Time[interval][0:8], Time[2*interval][0:8], Time[3*interval][0:8], Time[-1][0:8]))
+        ax.set_xticklabels((Time[0][0:8], Time[interval][0:8], Time[2*interval][0:8], Time[3*interval][0:8], Time[-1][0:8]))
         ax.set_yticks(np.linspace(min(Price), max(Price), 8))
-        #ax.set_yticklabels( ('500', '800', '1100', '1400', '1700','2000'))
+        #ax.set_yticklabels(('500', '800', '1100', '1400', '1700','2000'))
         # Configurate the labels
         xlabel = "The day from " + str(Time[0][0:8]) + " to " + str(Time[-1][0:8])
         ylabel = "The price of the international gold"

@@ -4,6 +4,8 @@ from FkNN import *
 from changetime import *
 
 
+datapath = os.getcwd() + "BuildData\\"
+
 # Calculate the moving average line of each period
 # *** a matrix of MVA and a list of Period ***
 def MVA(UTC, Price, Period):
@@ -44,6 +46,31 @@ def BOLL(UTC, Price, Period):
     return MVAPrice, BOLLline, period
 
 
+# To calculate the moving average value and BOLL values and store it to the "datapath"
+# *** No return ***
+def saveBOLL(type, startime, endtime, Period):
+    if Period[0] == "D":
+        Period = str(int(Period[1:]) * 864000)
+    if Period[0] == "H":
+        Period = str(int(Period[1:] * 3600))
+    startime = int(time.mktime(time.strptime(startime, "%Y%m%d"))) - max([int(i) for i in Period.split(',')])
+    startime = time.strftime("%Y%m%d", time.localtime(startime))
+    Time, UTC, Price = input2data("UTC" + type[-6:], startime, endtime)
+    MVAPrice, BOLLline, period = BOLL(UTC, Price, Period)
+    UTC = UTC[max(period):]
+    Time = Time[max(period):]
+    Price = Price[max(period):]
+    MVAPrice = np.array(MVAPrice)[:, max(period):]
+    BOLLline = np.array(BOLLline)[:, max(period):]
+    filename = type[-6:] + startime + "_" + endtime + "_BOLL" + Period + ".txt"
+    returnfile = open(datapath + filename, "w")
+    for index in range(len(UTC)):
+        returnfile.write(str(Time[index]) + "," + str(UTC[index]) + "," + str(Price[index]) + ","\
+                         + str(MVAPrice[0][index]) + "," + str(BOLLline[0][index, 0]) + "," +\
+                         str(BOLLline[0][index, 1]) + "\n")
+    returnfile.close()
+
+
 if version == -1:
     # Plot the MVA line
     # *** No return ***
@@ -67,21 +94,17 @@ if version == -1:
         handles, labels = ax.get_legend_handles_labels()
         ax.legend(handles, labels)
 
-        plt.plot(UTC[max(period):], Price[max(period):], "k", label="Price")
+        plt.plot(UTC, Price, "k", label="Price")
 
         for i in range(number):
-            plt.plot(UTC[max(period):], MVAPrice[i][max(period):], label="MVA" + str(period[i]))
+            plt.plot(UTC, MVAPrice[i], label="MVA" + str(period[i]))
 
         handles, labels = ax.get_legend_handles_labels()
         ax.legend(handles[::-1], labels[::-1])
         # Configurate the scale of the coordinate
-        T0 = max(period)
-        interval = int(len(UTC[max(period):]) / 5)
-        T = []
-        for i in range(4):
-            T.append(Time[T0 + i * interval][0:8])
-        ax.set_xticks(np.linspace(UTC[max(period)], UTC[-1], 5))
-        ax.set_xticklabels((T[0], T[1], T[2], T[3], Time[-1][0:8]))
+        interval = int(len(Price) / 5)
+        ax.set_xticks(np.linspace(UTC[0], UTC[-1], 5))
+        ax.set_xticklabels((Time[0][0:8], Time[interval][0:8], Time[2*interval][0:8], Time[3*interval][0:8], Time[-1][0:8]))
         ax.set_yticks(np.linspace(min(Price), max(Price), 8))
         #ax.set_yticklabels(('500', '800', '1100', '1400', '1700','2000'))
         # Configurate the labels
@@ -114,6 +137,10 @@ if version == -1:
         startime = time.strftime("%Y%m%d", time.localtime(startime))
         Time, UTC, Price = input2data("UTC" + type[-6:], startime, endtime)
         MVAPrice, period = MVA(UTC, Price, Period)
+        UTC = UTC[max(period):]
+        Time = Time[max(period):]
+        Price = Price[max(period):]
+        MVAPrice = np.array(MVAPrice)[:, max(period):]
         plotMVAdata(Time, UTC, Price, MVAPrice, period, type[-6:])
 
 
@@ -138,24 +165,20 @@ if version == -1:
         # Set the figure legend labels
         handles, labels = ax.get_legend_handles_labels()
         ax.legend(handles, labels)
-        plt.plot(UTC[max(period):], Price[max(period):], "k", label="Price")
+        plt.plot(UTC, Price, "k", label="Price")
         for i in range(number):
-            plt.plot(UTC[max(period):], MVAPrice[i][max(period):], label="MVA" + str(period[i]))
+            plt.plot(UTC, MVAPrice[i], label="MVA" + str(period[i]))
 
         BOLLline = np.array(BOLLline)
         for i in range(number):
-            plt.plot(UTC[max(period):], BOLLline[i][max(period):, 0], UTC[max(period):], BOLLline[i][max(period):, 1], label="BOLL" + str(period[i]))
+            plt.plot(UTC, BOLLline[i][:, 0], UTC, BOLLline[i][:, 1], label="BOLL" + str(period[i]))
 
         handles, labels = ax.get_legend_handles_labels()
         ax.legend(handles[::-1], labels[::-1])
         # Configurate the scale of the coordinate
-        T0 = max(period)
-        interval = int(len(UTC[max(period):]) / 5)
-        T = []
-        for i in range(4):
-            T.append(Time[T0 + i * interval][0:8])
-        ax.set_xticks(np.linspace(UTC[max(period)], UTC[-1], 5))
-        ax.set_xticklabels((T[0], T[1], T[2], T[3], Time[-1][0:8]))
+        interval = int(len(Price) / 5)
+        ax.set_xticks(np.linspace(UTC[0], UTC[-1], 5))
+        ax.set_xticklabels((Time[0][0:8], Time[interval][0:8], Time[2*interval][0:8], Time[3*interval][0:8], Time[-1][0:8]))
         ax.set_yticks(np.linspace(min(Price), max(Price), 8))
         #ax.set_yticklabels(('500', '800', '1100', '1400', '1700','2000'))
         # Configurate the labels
@@ -188,4 +211,9 @@ if version == -1:
         startime = time.strftime("%Y%m%d", time.localtime(startime))
         Time, UTC, Price = input2data("UTC" + type[-6:], startime, endtime)
         MVAPrice, BOLLline, period = BOLL(UTC, Price, Period)
+        UTC = UTC[max(period):]
+        Time = Time[max(period):]
+        Price = Price[max(period):]
+        MVAPrice = np.array(MVAPrice)[:, max(period):]
+        BOLLline = np.array(BOLLline)[:, max(period):]
         plotBOLLdata(Time, UTC, Price, MVAPrice, BOLLline, period, type[-6:])
