@@ -20,4 +20,15 @@ endtime = "20070720"
 
 # saveBOLL("UTCXAUUSD", "20050304", "20060609", "300")
 
-plotprice_hurst3("UTCXAUUSD", "20050307", "20050310", 50)
+# plotprice_hurst3("UTCXAUUSD", "20050307", "20050310", 50)
+
+
+def plotchart(charttype, forextype, startime, endtime, Period):
+    if charttype == "Price":
+        plotpricechart(forextype, startime, endtime)
+    if charttype == "Hurst":
+        plotprice_hurst(forextype, startime, endtime, Period)
+    if charttype == "MVA":
+        plotMVA(forextype, startime, endtime, Period)
+    if charttype == "BOLL":
+        plotBOLL(forextype, startime, endtime, Period)

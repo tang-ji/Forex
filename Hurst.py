@@ -40,6 +40,7 @@ def Hurst(Price):
 # Transform the Price data into Hurst Data
 # *** a list of UTC and a list of Hurstvalue ***
 def data2hurst(UTC, Price, prange):
+    prange = int(prange)
     p = len(UTC) / prange
     p = int(p)
     Hurstvalue = np.arange(0, p+1, dtype=float)

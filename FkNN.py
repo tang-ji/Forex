@@ -301,7 +301,7 @@ if version == -1:
         fp = name + "_" + str(Time[0][0:8]) + "_" + str(Time[-1][0:8])
 
         #**********************************************************
-        fig = plt.figure(figsize=(8, 6), dpi=84, facecolor="white")
+        fig = plt.figure(figsize=(16, 12), dpi=84, facecolor="white")
         axes = plt.subplot(111)
         axes.cla() # Clear all the information in the coordinate
         # Assign the font of the picture
@@ -345,6 +345,6 @@ if version == -1:
 
     # To plot the chart in the giving time for the giving type
     # *** No return ***
-    def plotchart(type, startime, endtime):
+    def plotpricechart(type, startime, endtime):
         Time, UTC, Price = input2data("UTC" + type[-6:], startime, endtime)
         plotUTCforexdata(Time, UTC, Price, type[-6:])
