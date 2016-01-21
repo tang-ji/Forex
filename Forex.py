@@ -18,6 +18,6 @@ endtime = "20070720"
 #
 # plotprice_hurst("UTC" + type[-6:], "20080730", "20080803", 50)
 
-saveBOLL("UTCXAUUSD", "20050304", "20060609", "300")
+# saveBOLL("UTCXAUUSD", "20050304", "20060609", "300")
 
-
+plotprice_hurst3("UTCXAUUSD", "20050307", "20050310", 50)

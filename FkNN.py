@@ -348,6 +348,3 @@ if version == -1:
     def plotchart(type, startime, endtime):
         Time, UTC, Price = input2data("UTC" + type[-6:], startime, endtime)
         plotUTCforexdata(Time, UTC, Price, type[-6:])
-
-
-

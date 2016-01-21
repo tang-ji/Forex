@@ -30,12 +30,13 @@ def MVA(UTC, Price, Period):
 # Calculate the moving average line of each period
 # *** a matrix of MVA, a 3D-matrix of BOLL and a list of Period ***
 def BOLL(UTC, Price, Period):
-    MVAPrice, period = MVA(UTC, Price, Period)
+    period = [int(i) for i in Period.split(',')]
     number = len(period)
     BOLLline = []
     MVAPrice = []
     for i in range(number):
         BOLLclass = []
+        MVAj = []
         for j in range(len(UTC)):
             line = []
             if j + 1 < period[i]:
