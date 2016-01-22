@@ -10,10 +10,13 @@ from numpy import *
 import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D
 import numpy as np
+import os
 from Tkinter import *
 import matplotlib
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 from matplotlib.figure import Figure
+
+datapath = os.getcwd()[0:-6] + "/kNN/"
 #----------------------------------------------------------------------
 def file2matrix(filename):
    fr = open(filename) #Load the data
@@ -57,6 +60,7 @@ def drawPic():
         t.insert(END, "epoch:" + str(trainer.totalepochs) + "  train error:" + str(round(trnresult, 2)) \
                   + "%  test error:" + str(round(tstresult, 2)) + "%\n")
         # Clear the Figure
+        drawPic.f.clf()
         drawPic.a = drawPic.f.add_subplot(111, projection='3d')
         drawPic.a.set_title('Training...')
         for a, c, m in [(0, 'r', 'o'), (1, 'b', '^'), (2, 'y', 's')]:
@@ -90,7 +94,7 @@ if __name__ == '__main__':
     Button(root, text='Begin', command=drawPic).grid(row=1, column=2, columnspan=3)
 
     alldata = ClassificationDataSet(3, 1, nb_classes=3)
-    datingDataMat, datingLabels = file2matrix('E:\Documents\Python\kNN\datingTestSet.txt')
+    datingDataMat, datingLabels = file2matrix(datapath + 'datingTestSet.txt')
     normMat, ranges, minValues = autoNorm(datingDataMat)
     for i in range(len(normMat)):
         alldata.addSample(normMat[i], [datingLabels[i] - 1])
