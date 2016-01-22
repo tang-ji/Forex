@@ -40,4 +40,5 @@ trainer.trainUntilConvergence()
 out = SupervisedDataSet(3, 1)
 for i in range(len(normMat)):
     out.addSample(normMat[i], (datingLabels[i] - 1) / 2)
+out = net.activateOnDataset(out)
 print np.array(out)[:, 1]*2 + 1
